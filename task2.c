@@ -24,10 +24,7 @@ int Countuser = 0;
 union {
     struct {
        char flag[20];
-       char activetrue[20];
-       int active1;
-       char activefalse[20];
-       char active0[10];
+      
     } flag;
     
    
