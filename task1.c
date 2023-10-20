@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 
 struct User {
@@ -9,15 +10,44 @@ struct User {
     int  phone[15];
     char username[30];
     char password[30];
+    
 };
 
 struct User users[100]; 
+
+
+
 int Countuser = 0; 
 
 
+
+union {
+    struct {
+       char flag[20];
+       char activetrue[20];
+       int active1;
+       char activefalse[20];
+       char active0[10];
+    } flag;
+    
+   
+} u;
+
+
+
+
+
+
+
+
+
+
 void registration() {
+ 
+
     if (Countuser < 100) {
         struct User user;
+        
         printf("\nEnter a First Name : ");
         scanf("%s", user.firstname);
  
@@ -35,12 +65,25 @@ void registration() {
 
         printf("Enter a password : ");
         scanf("%s", user.password);
+        
+        printf("Enter a flag ( please Enter True or 1 ===> active  false or 0 ==>not active  ) : ");
+        scanf("%s",u.flag.flag);
+        
+     
 
+       
+       
         users[Countuser++] = user;
         printf("\n successful Registration!\n");
+         
     } else {
         printf("\nCannot register more users.\n");
     }
+  
+
+
+     
+    
 }
 
 
@@ -59,8 +102,15 @@ int main() {
     char username[30];
     char password[30];
     int option;
+ 
+        
    
+   strcpy(u.flag.activetrue,"true");
+   strcpy(u.flag.activefalse,"false");
 
+   
+   
+    
     while (1) {
         printf("\nPress 1 to Register\nPress 2 to login\nPress 3 to Quit\nEnter your choice: ");
         scanf("%d", &option);
@@ -68,20 +118,36 @@ int main() {
         switch (option) {
             case 1:
                 registration();
+              
+               
                 break;
 
             case 2:
+               
+                
+                if(strcmp(u.flag.flag,"true") ==0 || strcmp(u.flag.flag,"1")== 0){
+                printf("you allow to login \n");
                 printf("\nEnter your username : ");
                 scanf("%s", username);
 
                 printf("Enter your password : ");
                 scanf("%s", password);
 
-                if (login(username, password)) {
-                    printf("\nLogin successful!\n");
-                } else {
-                    printf("\nInvalid username or password.\n");
+                       if (login(username, password)) {
+                         printf("\nLogin successful!\n");
+                       } else {
+                        printf("\nInvalid username or password.\n");
+                        }
                 }
+
+                else if (strcmp(u.flag.flag,"false") ==0 || strcmp(u.flag.flag,"0")== 0)
+                {
+                     printf(" you not allow to login  \n "); 
+                }
+                
+               
+                
+                
                 break;
 
             case 3:
